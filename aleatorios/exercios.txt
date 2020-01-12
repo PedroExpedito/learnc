@@ -1,0 +1,1175 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+ int a,b;
+ char op[1];
+ printf("calculadora: \n");
+ scanf("%d",&a);
+ scanf(" %c",&op);
+ scanf("%d",&b);
+ printf("calculando...");
+
+ switch ( op[0] )
+ {
+ case '+':
+   printf("%d\n",a+b);
+   break;
+  case '-':
+    printf("%d\n\n", a - b);
+    break;
+  case '*':
+    printf("%d\n\n", a * b);
+    break;
+  case '/':
+    printf("%d\n\n", a / b);
+    break;
+ 
+ default:
+   break;
+ }
+ printf("fim\n");
+}
+
+
+int exercio1(void)
+{
+  float metros,decimetro;
+  printf("dijite o valor em metros:\n ");
+  scanf("%f",&metros);
+    decimetro = (metros / 10);
+    printf("valor em decimetro é %f decimetros\n", decimetro);
+}
+int exercicio2(void)
+{
+  int num1,num2;
+  for (num1 = 0; num1 <= 10; num1++){
+      num2 = num1 * 9;
+      printf("9x%d=%d\n",num1,num2);
+  }
+  }
+int exercio3(void)
+{
+  int num1,num2;
+  printf("escreva o numero decimal para converter para hexa e octa: \n");
+  scanf("%d", &num1);
+  printf("em hexa é %2X \n", num1);
+  printf("em octa é %o \n", num1);
+}
+int exercio4(void)
+{
+  int num1,num2;
+  double num3,num4;
+  printf("Dijite o graus em fahrenheit para celcius: ");
+  scanf("%lf", &num3);
+  num1 = (int)num3;
+  num2 = (num1 - 32) * 5/9;
+  num4 = (num1 - 32.0) * 5.0/9.0;
+  printf("em celcius em int é: %d em double é %lf \n", num2, num4);
+}
+int exercio5(void)
+{
+  int num1,num2;
+  printf("dijite o numero 1");
+  scanf("%d",&num1);
+  printf("dijite o numero 2");
+  scanf("%d",&num2);
+
+  printf("soma dos numeros: %d\n", num1+num2);
+  printf("soma do numero1 somado com o quadrado do segundo: %d\n", num1+(num2*num2));
+  printf("quadrado do primeiro numero: %d\n", num1*num1);
+  printf("soma dos quadrados do primeiro e segundo numero: %d\n", (num1*num1)+(num2*num2));
+  printf("o modulo do primeiro numero: %d\n", num1);
+  printf("Seno da diferença do primeiro número pelo segundo: %lf\n", sin((double)num1-num2)); 
+}
+int exercicio6(void)
+{
+  int num1,num2,contador;
+  printf("Dijite o valor 1: \n");
+  scanf("%d",&num1);
+  printf("Dijite o valor 2: \n");
+  scanf("%d",&num2);
+  if (num1 == num2){
+    printf("valores iguais\n");
+  }
+  else{
+    for (;num1 < num2+1;num1++){
+    printf("%d\n",num1);
+  }
+  }
+}
+int exercio7(void)
+{
+ int a=0;
+    printf("IMPRIMINDO TABELA ASCII");
+    for(a=1;a<127;a++){
+    printf("Decimal: %i   Octal: %o Hexadecimal: %x   Caractere: %c ",a,a,a,a);
+}
+}
+
+
+int exercio8(void)
+{
+ int a,b;
+ char op[1];
+ printf("calculadora: \n");
+ scanf("%d",&a);
+ scanf(" %c",&op);
+ scanf("%d",&b);
+ printf("calculando...");
+
+ switch ( op[0] )
+ {
+ case '+':
+   printf("%d\n",a+b);
+   break;
+  case '-':
+    printf("%d\n\n", a - b);
+    break;
+  case '*':
+    printf("%d\n\n", a * b);
+    break;
+  case '/':
+    printf("%d\n\n", a / b);
+    break;
+ 
+ default:
+   break;
+ }
+ printf("fim\n");
+}
+
+int exercio9(void){
+  float nota1,nota2;
+  int contador;
+  while (nota1 != 50)
+  {
+    printf("dijite 50 para sair\n");
+    printf("dijite a primeira nota \n");
+    scanf("%f", &nota1);
+    printf("Dijite a segunda nota: \n");
+    scanf("%f",&nota2);
+    printf("Media é %f\n", (nota1 + nota2) / 2); 
+  }
+  
+}
+
+// grupo 3
+//exercio 1 colocar a biblioteca bool foi a melhor forma que encontrei
+
+#include<stdbool.h>
+int main(void){
+  bool verdade = true;
+  if(verdade == true){
+    printf("verdade");
+  }
+}
+//exercio 2 é muito facil e eu não tinha focado em me certificar que os cabelhalhos estavam salvos
+// exercio 3
+int pot(int numero,int expoente){
+  int i, resultado=1;	//resultado começa com 1 para caso expoente=0, não entrara no laço e retornará 1
+  for (i=1; i<=expoente; i++){
+    resultado *= numero;	//resultado é multiplicado pelo numero
+  }
+  return resultado;
+}
+//grupo 4
+// exercio 2
+int fatorial()
+{
+long double fat, n;
+printf("Insira um valor para o qual deseja calcular seu fatorial: ");
+scanf("%f", &n);
+ 
+for(fat = 1; n > 1; n = n - 1)
+fat = fat * n;
+ 
+printf("\nFatorial calculado: %.0f\n", fat);
+return 0;
+}
+// exercio 3 tudo na mesma funcao
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "calculos.h"
+
+
+int main()
+{
+float gasto, total;
+int dijitado,parcelas;
+bool desconto = false;
+printf("Insira o gasto do cliente: \n");
+scanf("%f",&gasto);
+if(gasto >= 100){
+  printf("você inseriu R$:%.2f\n",gasto);
+  printf("Dijite: 1 para a vista com 10%% de desconto\n");
+  printf("Dijite: 2 para em duas vezes (preço da etiqueta)\n");
+  printf("Dijite: 3 para parcelas de até 10 vezes com 3%% de juros ao mês (somente para compras acima de R$ 100,00)\n");
+  scanf("%d",&dijitado);
+  desconto = true;
+}
+else{
+  printf("você inseriu R$:%.2f\n",gasto);
+  printf("Dijite: 1 para a vista com 10%% de desconto\n");
+  printf("Dijite: 2 para em duas vezes (preço da etiqueta)\n");
+  scanf("%d",&dijitado);
+}
+switch ( dijitado )
+{
+case 1:
+  printf("Valor a pagar R$:%.2f\n",gasto * 0.9);
+  break;
+case 2:
+  printf("Duas parcelas de R$:%.2f\n",gasto/2);
+  break;
+  case 3:
+  printf("Quantas parcelas ?\n");
+  scanf("%d",&parcelas);
+  total = gasto / parcelas;
+  total = total + (total * 0.03);
+  printf("em %d parcelas cada uma fica R$:%.2f\n", parcelas,total);
+  break;
+
+default:
+  break;
+}
+}
+
+// em varias func 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "calculos.h"
+
+int imprima();
+int opcao1();
+int opcao2();
+int opcao3();
+int main()
+{
+imprima();
+}
+int imprima(void){
+  int dijitado;
+  printf("Dijite: 1 para a vista com 10%% de desconto\n");
+  printf("Dijite: 2 para em duas vezes (preço da etiqueta)\n");
+  printf("Dijite: 3 para parcelas de até 10 vezes com 3%% de juros ao mês (somente para compras acima de R$ 100,00)\n");
+  scanf("%d",&dijitado);
+  switch ( dijitado )
+  {
+  case 1:
+    opcao1();
+    break;
+  case 2:
+    opcao2();
+    break;
+  case 3:
+    opcao3();
+    break;
+  
+  default:
+    break;
+  }
+
+}
+int opcao1(void){
+  float gasto;
+  printf("Insira o gasto do cliente: \n");
+  scanf("%f",&gasto);
+  printf("Valor a pagar R$:%.2f\n",gasto * 0.9);
+}
+int opcao2(void){
+  float gasto;
+  printf("Insira o gasto do cliente: \n");
+  scanf("%f",&gasto);
+  printf("Duas parcelas de R$:%.2f\n",gasto/2);
+}
+int opcao3(void){
+  float gasto,total;
+  int parcelas;
+  printf("Insira o gasto do cliente: \n");
+  scanf("%f",&gasto);
+  if(gasto >= 100){
+    printf("Quantas parcelas ?\n");
+    scanf("%d",&parcelas);
+    total = gasto / parcelas;
+    total = total + (total * 0.03);
+    printf("em %d parcelas cada uma fica R$:%.2f\n", parcelas,total);
+  }
+  else{
+    printf("o valor da compra do cliente é inferior a 100 reais use outra opção!\n");
+    imprima();
+  }
+
+}
+// grupo IV 
+// exercio 1 
+//funcs
+int capturarnumeroparalista(int *lista,int tamanho);
+int ordenarvetoremordemcrescente(int *lista, int tamanho);
+int imprimirvaloresdalista(int *lista, int tamanho);
+int imprimirmaioremenorvalordalista(int *lista,int tamanho);
+
+//fim
+int main()
+{
+    int tamanho = 10;
+    int lista[tamanho];
+    printf("Escreva os valores: \n");
+    capturarnumeroparalista(lista,tamanho);
+    ordenarvetoremordemcrescente(lista,tamanho);
+    //imprimirvaloresdalista(lista,tamanho);
+    imprimirmaioremenorvalordalista(lista,tamanho);
+    return 0;
+}
+
+
+int capturarnumeroparalista(int *lista,int tamanho)
+{
+    int contador;
+
+    for(contador = 0;contador < tamanho; contador++){
+        scanf("%d", &lista[contador]);
+        printf("proximo\n");
+}
+    return *lista;
+}
+
+int ordenarvetoremordemcrescente(int *lista, int tamanho){
+    int contador,memoria, i;
+
+    for (contador = 1; contador < tamanho; contador++){
+        for (i = 0; i < tamanho - 1; i++){
+            if (lista[i] > lista[i +1]){
+            memoria = lista[i];
+            lista[i] = lista[i +1];
+            lista[i +1] = memoria;
+            }
+        }
+    }
+    return *lista;
+}
+int imprimirvaloresdalista(int *lista,int tamanho){
+    int contador;
+    printf("Imprimindo valores\n\n");
+    for(contador = 0; contador < tamanho; contador++){
+        printf("%d\n",lista[contador]);
+    }
+}
+int imprimirmaioremenorvalordalista(int *lista,int tamanho){
+    printf("Maior valor é %d e o menor é %d\n", lista[tamanho -1],lista[0]);
+}
+// exercio 2 eu fiz isso no exercio 1 hue
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "calculos.h"
+//funcs
+int capturarnumeroparalista(int *lista,int tamanho);
+int ordenarvetoremordemcrescente(int *lista, int tamanho);
+int imprimirvaloresdalista(int *lista, int tamanho);
+int imprimirmaioremenorvalordalista(int *lista,int tamanho);
+
+//fim
+int main()
+{
+    int tamanho = 10;
+    int lista[tamanho];
+    printf("Escreva os valores: \n");
+    capturarnumeroparalista(lista,tamanho);
+    ordenarvetoremordemcrescente(lista,tamanho);
+    imprimirvaloresdalista(lista,tamanho);
+    //imprimirmaioremenorvalordalista(lista,tamanho);
+    return 0;
+}
+
+
+int capturarnumeroparalista(int *lista,int tamanho)
+{
+    int contador;
+
+    for(contador = 0;contador < tamanho; contador++){
+        scanf("%d", &lista[contador]);
+        printf("proximo\n");
+}
+    return *lista;
+}
+
+int ordenarvetoremordemcrescente(int *lista, int tamanho){
+    int contador,memoria, i;
+
+    for (contador = 1; contador < tamanho; contador++){
+        for (i = 0; i < tamanho - 1; i++){
+            if (lista[i] > lista[i +1]){
+            memoria = lista[i];
+            lista[i] = lista[i +1];
+            lista[i +1] = memoria;
+            }
+        }
+    }
+    return *lista;
+}
+int imprimirvaloresdalista(int *lista,int tamanho){
+    int contador;
+    printf("Imprimindo valores\n\n");
+    for(contador = 0; contador < tamanho; contador++){
+        printf("%d\n",lista[contador]);
+    }
+}
+int imprimirmaioremenorvalordalista(int *lista,int tamanho){
+    printf("Maior valor é %d e o menor é %d\n", lista[tamanho -1],lista[0]);
+}
+
+// 3 sempre setar as variaveis de valor 0 como 0
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+//funcs
+void capturarnumeroparalista(float *notas,int tamanho);
+float somarvaloresdoarray(float *notas,int tamanho);
+float calcularmedia(float somatotal, int tamanho);
+//fim
+int main()
+{
+int tamanho = 2;
+float notas[tamanho];
+float somatotal=0,media=0;
+
+printf("Dijite os valores: \n");
+capturarnumeroparalista(notas,tamanho);
+somatotal = somarvaloresdoarray(notas,tamanho);
+media = calcularmedia(somatotal,tamanho);
+printf("Media é %f\n",media);
+
+}
+
+void capturarnumeroparalista(float *notas,int tamanho)
+{
+    int contador;
+    for(contador = 0;contador < tamanho; contador++){
+        scanf("%f", &notas[contador]);
+        printf("proximo\n");
+}
+    
+}
+float somarvaloresdoarray(float *notas,int tamanho){
+    int contador;
+    float somatotal=0;
+    for (contador = 0; contador < tamanho; contador++){
+        somatotal += notas[contador];// aqui fazendo conta errada
+    }
+    return somatotal;
+}
+float calcularmedia(float somatotal,int tamanho){
+    float media=0;
+    media = somatotal / tamanho;
+
+    return media;
+}
+
+
+
+
+//4 Livro desatualizado falava que definia double como %f porém é %lf
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+//funcs
+void capturarnumeroparalista(double *notas,int tamanho);
+void imprimirarray(double *notas,int tamanho);
+//fim
+int main()
+{   
+    int tamanho = 5;
+    double notas[tamanho];
+    printf("Dijite numeros\n");
+    capturarnumeroparalista(notas,tamanho);
+    imprimirarray(notas,tamanho);
+
+
+}
+void capturarnumeroparalista(double *notas,int tamanho)
+{
+    int contador;
+    for(contador = 0;contador < tamanho; contador++){
+        scanf("%lf", &notas[contador]);
+        printf("proximo\n");
+}
+}
+
+void imprimirarray(double *notas,int tamanho){
+    int contador=0;
+    for(contador = 0;contador < tamanho; contador++){
+        printf("os valores dijitados são: \n");
+        printf("%lf\n", notas[contador]);
+    }
+}
+// exercio 5
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+//funcs
+void capturarnumeroparalista(int *notas,int tamanho);
+int calcularmedia(int somatotal,int tamanho);
+int verificarseamedianorray(int *notas,int media,int tamanho);
+int somarvaloresdoarray(int *notas,int tamanho);
+//fim
+int main()
+{   
+    int tamanho = 10,media=0,existe=0,somatotal=0;
+    int notas[tamanho];
+    printf("Dijite numeros\n");
+    capturarnumeroparalista(notas,tamanho);
+    somatotal = somarvaloresdoarray(notas,tamanho);
+    media = calcularmedia(somatotal,tamanho);
+    existe = verificarseamedianorray(notas,media,tamanho);
+    //printf("quantos vezes ele se repete%d",existe);
+    if(existe > 0){
+        printf("existe sim");
+    }
+    else{
+       printf("Não existe"); 
+    }
+}
+void capturarnumeroparalista(int *notas,int tamanho)
+{
+    int contador;
+    for(contador = 0;contador < tamanho; contador++){
+        scanf("%d", &notas[contador]);
+        printf("proximo\n");
+}
+}
+
+int calcularmedia(int somatotal,int tamanho){
+    int media=0;
+    media = somatotal / tamanho;
+
+    return media;
+}
+int verificarseamedianorray(int *notas,int media,int tamanho){
+    int contador = 0,existe=0;
+    for(contador =0; contador < tamanho; contador++){
+        if(media == notas[contador]){
+            existe += 1;
+        }
+    }
+    return existe;
+}
+int somarvaloresdoarray(int *notas,int tamanho){
+    int contador;
+    int somatotal=0;
+    for (contador = 0; contador < tamanho; contador++){
+        somatotal += notas[contador];// aqui fazendo conta errada
+    }
+    return somatotal;
+}
+// grupo 7 strings o scanf tem muitos parametros
+#include <stdio.h>
+
+// Contar caracteres
+
+int contar(char *frase){
+
+    int controle;
+
+    for(controle=0;frase[controle]!='\0';controle++){
+        //printf("frase caractere[ %c ]\n",frase[controle]);
+
+    }
+
+
+    return(controle);
+}
+
+// Contar caracteres de pontuação
+
+int funcPont(char *frase){
+
+    char *pont;
+    int cont1,cont2,total=0;
+
+    pont = ",.;:!?()-";
+
+    for(cont1=0;frase[cont1];cont1++){
+
+        for(cont2=0;pont[cont2];cont2++){
+
+            if(frase[cont1] == pont[cont2]){
+
+                total++;
+
+                if(frase[cont1+1] == '.'){
+
+                    if(frase[cont1+2] == '.'){
+                        cont1 = cont1 + 2;
+                    }
+                }
+            }
+        }
+    }
+
+    return(total);
+}
+
+
+// Contar caracteres numericos
+
+int funcNum(char *frase){
+
+    int cont1,total=0;
+
+    for(cont1=0;frase[cont1];cont1++){
+
+        if( (frase[cont1]>='0') && (frase[cont1] <= '9') ){
+
+            total++;
+        }
+    }
+    return(total);
+}
+
+// Contar caracteres minusculos
+
+int funcMin(char *frase){
+
+    int cont,total=0;
+
+    for(cont=0;frase[cont];cont++){
+
+        if( (frase[cont] >= 'a') &&(frase[cont] <='z') ){
+
+            total++;
+        }
+    }
+    return(total);
+}
+
+int main(){
+
+    char frase[80] = "frase\0";
+
+    printf("Escreva uma frase.\n");
+    scanf("%[^\n]",&frase);
+
+    printf("NUMERO DE CARACTERE : %d \n",contar(frase));
+
+    printf("NUMERO DE CARACTERES DE PONTUACAO : %d\n",funcPont(frase));
+
+    printf("NUMERO DE CARACTERES NUMERICOS :%d \n",funcNum(frase));
+
+    printf("NUMERO DE CARACTERES MINUSCULOS :%d\n",funcMin(frase));
+
+    return(0);
+}
+// exercio 2 grupo strings
+
+#include <stdio.h>
+int imprimirpalavras(char *frase);
+int main(){
+    
+    char frase[80] = "frase\0";
+
+    printf("Escreva uma frase.\n");
+    scanf("%[^\n]",&frase);
+
+    imprimirpalavras(frase);
+
+    return(0);
+}
+/*int contarspaces(char *frase){
+    int contador =0;
+    char save[80] = "save\0";
+    for(contador=0;frase[contador];contador++){
+        if(frase[contador] != ' ')
+        {
+            save[contador] = frase[contador];
+        }
+        else{
+            save[contador] = ' ';
+        }   
+    }
+    printf("%s\n",save);
+    
+    return 0;
+}*/
+int imprimirpalavras(char *frase){
+    int i;
+    for (i = 0;frase[i]; i++)
+    {
+        if(frase[i] != ' '){
+            printf("%c",frase[i]);
+        }
+        else{
+            printf("\n");
+        }
+    }
+    printf("\n");
+    
+}
+
+// exercio 3 strings
+#include <stdio.h>
+int imprimirpalavrasdetrazparafrente(char *frase);
+int main(){
+    
+    char frase[80] = "frase\0";
+
+    printf("Escreva uma frase.\n");
+    scanf("%[^\n]",&frase);
+    imprimirpalavrasdetrazparafrente(frase);
+
+    
+
+    return(0);
+}
+int imprimirpalavrasdetrazparafrente(char *frase){
+    int i=0,tam=0;
+    for (i = 0;frase[i]; i++){tam++;}
+    for (i = 0; tam >= 0;tam--){
+        printf("%c",frase[tam]);
+    }
+    
+}
+// exercio 4
+#include <stdio.h>
+
+int main(){
+    
+    char nome[80] = "nome\0";
+    char endereco[80] = "desconhecido\0";
+    char telefone[20]= "telefone\0";
+    int idade = 0;
+    printf("Escreva seu nome: \n");
+    scanf("%[^\n]s",&nome);
+    setbuf(stdin, NULL); // limpa o buffer do enter
+    printf("Escreva seu endereço:");
+    scanf("%[^\n]s",&endereco);
+    setbuf(stdin, NULL);
+    printf("Escreva sua idade: \n");
+    scanf("%d",&idade);
+
+    printf("Escreva seu telefone: \n");
+    scanf("%s",&telefone);
+
+    printf("Seu nome é %s, você tem %d anos, mora %s e seu telefone é %s\n",nome,idade,endereco,telefone);
+    return(0);
+}
+// exercio 5 forma usual 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int condition();
+int main(){
+  int a = condition();
+  printf("%d\n",a);
+}
+int condition(){
+  
+char cond[4]="nul\0";
+char s[1] = "S";
+char n[1] = "N";
+printf("Dijite SIM ou NAO \n");
+scanf("%[A-Z]s",&cond);
+
+if(cond[0] == s[0]){
+    return 1;
+}
+else if(cond[0] == n[0]){
+    return 0;
+}
+	
+}
+// do jeito que tem que ser 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int condition();
+int main(){
+  int a = condition();
+  printf("%d",a);
+  return 0;
+}
+int condition(){
+  
+char cond[4]="nul\0";
+printf("Dijite SIM ou NAO \n");
+scanf("%[A-Z]s",&cond);
+
+if(strcmp (cond, "SIM") == 0){
+    return 1;
+}
+else if(strcmp (cond, "NAO") == 0){
+    return 0;
+}
+else{
+    return 2;
+}
+}    
+// exercio 6
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int space();
+int main(){
+  int a = space();
+  printf("%d\n",a);
+  return 0;
+}
+int space(){
+int i=0,num=0;  
+char cond[80]="nul\0";
+printf("Dijite uma frase para contas os espaços\n");
+scanf("%[^\n]s",&cond);
+for(i=0;cond[i];i++){
+    if (cond[i] == ' ')
+    {
+        num++;
+    }
+    
+}
+return num;
+}
+// strings exercio 7
+
+char mystrcpy(char *destino, char *atual){
+  int i=0;
+  for(i=0;atual[i];i++){
+    if (atual[i] != ' '){
+      destino[i] = atual[i];
+    }
+  }
+
+}
+
+//strings exercio 8
+/* Fazer um programa em "C" que solicita um número inteiro e soletra o mesmo
+na tela.
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void soletra(char *number);
+int main(){
+  int tam = 10;
+  char number[tam];
+  printf("Dijite um numero: ");
+  scanf("%[0-9]s",&number);
+  setbuf(stdin, NULL);
+  printf("%s\n",number);
+  soletra(number);
+}
+void soletra(char *number){
+  int i=0;
+  char sonumber[10];
+  int tam = strlen(number);
+  printf("Os numeros dijitados foram: ");
+  for(i=0;number[i];i++){
+    if(i > 0){
+      printf(" ");
+    }
+
+    switch ( number[i] )
+    {
+    case '0':
+      strcpy(sonumber,"Zero");
+      break;
+    case '1':
+      strcpy(sonumber,"Um");
+      break;
+    case '2':
+      strcpy(sonumber,"Dois");
+      break;
+    case '3':
+      strcpy(sonumber,"Trés");
+      break;
+    case '4':
+      strcpy(sonumber,"Quatro");
+      break;
+    case '5':
+      strcpy(sonumber,"Cinco");
+      break;
+    case '6':
+      strcpy(sonumber,"Seis");
+      break;
+    case '7':
+      strcpy(sonumber,"Sete");
+      break;
+    case '8':
+      strcpy(sonumber,"Oito");
+      break;
+    case '9':
+      strcpy(sonumber,"Nove");
+      break;
+
+    default:
+      break;
+    }
+    printf("%s",sonumber);
+    if(i < (tam-1)){
+      printf(",");
+    }
+    else{
+      printf(".\n");
+    }
+
+  }
+}
+/// exercio 9 grupo string
+
+
+  /* 9. Fazer um programa em "C" que leia nomes de pessoas compostos por um pré-
+nome e um sobrenome separados por um espaço em branco e imprima:
+- A lista de nomes em ordem alfabética do pré-nome;
+- A lista de nomes em ordem alfabética de sobrenomes;
+- O número médio de letras por nome.
+Obs:
+•
+ a quantidade de nomes lidos deve ser menor ou igual a 20;
+•
+ uma seqüência de nomes é encerrada pela palavra "FIM" ou quando for lido o
+20 nome.
+ */
+/* O EXERCIO MAIS HARD DE TODOS OS EXERCIOS SE FOSSE EM PYTHON OU JS JÀ TINHA FEITO */
+
+#include <stdio.h>
+#include <string.h>
+int main(){
+
+  float media=0,soma=0;
+  int i=0,tam=20,j=0,dijitados=0;
+  char nomes[tam][20],aux[20];
+  char sobrenomes[tam][40],saux[40];
+
+  printf("Coloque a Lista de Nomes; Dijite FIM para sair.\n");
+
+  for(i=0;i < tam;i++){
+    char tmpnomes[tam][20];
+    char tmpsobrenomes[tam][40];
+    printf("Nome %d: ",i+1);
+    scanf("%s%[^\n]s",&tmpnomes[i],&tmpsobrenomes[i]);
+    setbuf(stdin, NULL);
+    if(strcmp(tmpnomes[i], "FIM") != 0)
+    {
+      dijitados++;
+      strcpy(nomes[i],tmpnomes[i]);
+      strcpy(sobrenomes[i],tmpsobrenomes[i]);
+    }
+    else{
+      break;
+    }
+  }
+//organizar array em ordem alfabetica dos pre-nomes
+  for (i = 1; i < dijitados; i++) {
+   for (j = 1; j < dijitados; j++) {
+      if (strcmp(nomes[j - 1], nomes[j]) > 0) {
+         strcpy(aux, nomes[j - 1]);
+         strcpy(nomes[j - 1], nomes[j]);
+         strcpy(nomes[j], aux);
+      }
+   }
+}
+//organizar array dos sobrenomes
+for (i = 1; i < dijitados; i++) {
+   for (j = 1; j < dijitados; j++) {
+      if (strcmp(sobrenomes[j - 1], sobrenomes[j]) > 0) {
+         strcpy(aux, sobrenomes[j - 1]);
+         strcpy(sobrenomes[j - 1], sobrenomes[j]);
+         strcpy(sobrenomes[j], aux);
+      }
+   }
+}
+
+//imprimir nomes
+printf("\nA lista de nomes em ordem alfabética do pré-nome: \n");
+for (i = 0; i < dijitados; i++){
+   printf("\n%s", nomes[i]);
+}
+//imprimir sobrenomes
+printf("\nA lista de nomes em ordem alfabética de sobrenomes: \n");
+for (i = 0; i < dijitados; i++){
+  printf("%s\n", sobrenomes[i]);
+}
+for (i = 0; i < dijitados; i++){
+    soma += strlen(nomes[i]);
+  }
+  media = soma / dijitados;
+printf("Numero medio de letras por nome: %.2f \n",media);
+}
+///10
+
+
+/*  Escrever uma função que recebe um string e um caracter como parâmetro e
+remove todas as ocorrências do caracter do string.
+ */
+#include <stdio.h>
+#include <string.h>
+char rmcaractere(char *palavra,char caractere[0]);
+int main(){
+  char palavra[100];
+  char p[1] = "p";
+  printf("Dijite uma palavra: \n");
+  scanf("%s",&palavra);
+  rmcaractere(palavra, "p");
+  printf("%s",palavra);
+  printf("precisasaircolocadocomaplavra");
+  return 0;
+}
+char rmcaractere(char *palavra,char caractere[0]){
+
+  char auxpalavra[100] = "\0";
+  int i=0,j=0,n=0;
+  int soma=0;
+  int caracteres = strlen(palavra),auxcactere=caracteres;
+  strcpy(auxpalavra,palavra);
+  printf("palavra: %s\n",auxpalavra);
+
+  for(i=0;(i + n) < caracteres;i++){ // Eu dijitando a palavra pedro tenho a saida edroo e o for roda 5 vez ao inves de 4 por causa do else
+    soma++;
+    if(auxpalavra[i] != caractere[0]){
+      printf("%c",auxpalavra[i]);
+      palavra[j] = auxpalavra[i];
+      j++;
+    }
+    else{
+      palavra[i] = palavra[i+ 1];
+      n + 1;
+      printf("igual\n");
+    }
+  }
+  char auxauxpalavra[100] = "/0";
+  for (i=j;i < caracteres;i++){// colocando um espaço no lugar das letras
+    palavra[i] = ' ';
+  }
+  for (i = 0; i < caracteres; i++)
+  {
+    if (palavra[i] != ' '){
+      auxauxpalavra[i] = palavra[i];
+    }
+    else{
+      break;
+    }
+  }
+  strcpy(palavra,auxauxpalavra);
+  
+  
+  printf("vezes que rodei o for: %d\n",soma);
+  
+  return 0;
+}
+
+// exercio 11
+
+/*  . Escreva uma função em "C" que receba um string um caracter e o índice de
+uma posição do string como parâmetro e insira o caracter na posição
+"empurrando" todos os demais para o lado.
+
+ */
+#include <stdio.h>
+#include <string.h>
+int insertcaractere(char *palavra,char caracter[0],int position);
+int main(){
+char lobo[20] = "abcdefghijkmopq";
+insertcaractere(lobo,"z",2);
+printf("%s",lobo);
+}
+int insertcaractere(char *palavra,char caracter[0],int position){
+  
+  int i=0,j=0;
+  char auxpalavra[100];
+  strcpy(auxpalavra,palavra);
+  printf("Antes do for: %s\n", auxpalavra);
+  for(i=position;i <= palavra[i] + 3 + position;i++){
+    if( j == 0){
+      printf("PRIMERIO\n");
+      auxpalavra[i] = caracter[0]; 
+      printf("AUX: %c\n",auxpalavra[i]); 
+      printf("AUX PALAVRA: %s\n",auxpalavra);
+      j++;
+    }
+    else{
+      auxpalavra[i] = palavra[i + 1 -position];// aqui estou na posão 3 já e o fica na pos 1
+      printf("Pos: %d letra: %c\n",i,auxpalavra[i]);
+    }
+  }
+  printf("auxpalavra depois do for: %s\n", auxpalavra);
+  strcpy(palavra,auxpalavra);
+}
+////
+/// exercio 11 melhorado sem o if
+void insertcaractere(char *palavra,char caracter[0],int position);
+int main(){
+char lobo[20] = "lobo";
+insertcaractere(lobo,"z",2);
+printf("%s",lobo);
+}
+void insertcaractere(char *palavra,char caracter[0],int position){
+  int i=0;
+  char auxpalavra[100];
+  strcpy(auxpalavra,palavra);
+  auxpalavra[position] = caracter[0]; 
+  for(i=1 + position;i <= palavra[i] + 3 + position;i++){
+      auxpalavra[i] = palavra[i + 1 -position];
+      printf("Pos: %d letra: %c\n",i,auxpalavra[i]);
+  }
+  strcpy(palavra,auxpalavra);
+}
+
+/* 12. Fazer uma rotina em "C" que recebe um string como parâmetro e devolve o
+endereço do primeiro caracter branco encontrado.
+ */
+#include <stdio.h>
+#include <string.h>
+int encontrarbranco(char *lista);
+int main(){
+  char ola[20] = "buenos dias";
+  printf("%d",encontrarbranco(ola));
+}
+int encontrarbranco(char *lista){
+    int i=0,spaces=0;
+    for(i=0;lista[i];i++){
+        if(lista[i] == ' '){
+            return i;
+        }
+    }
+    return 0;
+}
+
+/*3. Fazer uma rotina que recebe como parâmetro um string contendo um número e
+um inteiro indicanndo a base na qual o número está expresso, retornando o seu
+valor em decimal
+Ex: conv2dec("345", 8) => 229*/
+ 
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+int conv2dec(char *number,int type);
+int main(){
+  int a = conv2dec("1101",2);
+  printf("%d\n",a);
+}
+int conv2dec(char *number,int type){
+  {
+    
+    int decimal = 0;
+    int i = 0;
+    int valor = atoi(number);
+    while (valor != 0)
+    {
+        decimal =  decimal +(valor % 10)* pow(type, i++);
+        valor = valor / 10;
+    }
+    return decimal;
+}
+}
+
+
+
+
+    
+
+
+
+
