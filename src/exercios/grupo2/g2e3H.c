@@ -5,5 +5,8 @@ OBS: não use o comando "if" ou o operador de condição "?".
  */
 #include <stdio.h>
 int main(void){
-    
+float x=0;
+printf("Dijite o valor do produto: ");
+scanf("%f",&x); 
+printf("%.2lf",(x * (1.1 + 0.1 * ((x >= 100)))));   
 }
