@@ -19,13 +19,17 @@
 
 Obs: a agenda deve ter capacidade para 100 entradas.
  */
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#define TAM 10
-#include<stdlib.h>
+#include <unistd.h>
+#define TAM 100
+#include <stdlib.h>
 void create();
 void writeData();
 void readData();
+int rmData();
+int rmDataMAX();
 void menu();
 void findChar();
 typedef struct {
@@ -35,12 +39,30 @@ typedef struct {
   long int CEP;
 } Agenda;
 
-Agenda people[10];
+Agenda people[TAM];
 int MAX = 0;
 
 int main() {
   readData();
   menu();
+}
+int rmData() {
+  rmDataMAX();
+  if (unlink("data.txt") != 0){
+    fprintf(stderr, "Erro ao tentar remover: %s\n", strerror(errno));
+    return EXIT_FAILURE;
+  }
+  fprintf(stdout, "Arquivo removido com sucesso.\n");
+  return EXIT_SUCCESS;
+}
+
+int rmDataMAX() {
+  if (unlink("max.txt") != 0){
+    fprintf(stderr, "Erro ao tentar remover: %s\n", strerror(errno));
+    return EXIT_FAILURE;
+  }
+  fprintf(stdout, "Arquivo removido com sucesso.\n");
+  return EXIT_SUCCESS;
 }
 void writeData() {
   FILE *file;
@@ -81,20 +103,6 @@ void printData() {
   }
   menu();
 }
-/*void searchdata(char *name, Agenda *people) {
-  int i = 0;
-  for (i = 0; i < MAX; i++) {
-    if (strcmp(name, people[i].nome) == 0) {
-      printf("AQUI NA LISTA TEM\n\n");
-      printf("Nome: %s\n", people[i].nome);
-      printf("Endereço:  %s\n", people[i].endereco);
-      printf("Fone: %s\n", people[i].fone);
-      printf("CEP: %ld\n", people[i].CEP);
-      } else if (i >= MAX -1) {
-      printf("Não foi encontrado\n");
-    }
-  }
-}*/
 void create() {
   int x = MAX;
   printf("nome: \n");
@@ -116,7 +124,7 @@ void findChar() {
   scanf("%c", &p);
   setbuf(stdin, NULL);
   for (int i = 0; i < MAX; i++) {
-    printf("\n\nNOMES: começando com %c\n",p);
+    printf("\n\nNOMES: começando com %c\n", p);
     if (people[i].nome[0] == p) {
       printf("%s\n", people[i].nome);
     }
@@ -128,7 +136,8 @@ void menu() {
   printf("\n");
   printf("1 para entrar um novo nome na agenda.\n2 para  imprimir na tela os "
          "dados de uma das pessoas cadastradas \n3 Imprimir a lista de nomes "
-         "cadastrados que comecem pela letra indicada.\n4 para Fim \n\n");
+         "cadastrados que comecem pela letra indicada.\n4 para Fim \n5 para "
+         "remover o os dados salvos\n");
   int num;
   scanf("%d", &num);
   switch (num) {
@@ -146,11 +155,12 @@ void menu() {
     findChar();
     break;
   case 4:
-    //setbuf(stdin, NULL);
     writeData();
     printf("SAINDO...\n\n");
     exit(1);
-
+  case 5:
+    rmData();
+    menu();
   default:
     printf("Valor invalido!\n");
   }
