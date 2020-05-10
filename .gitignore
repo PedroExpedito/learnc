@@ -1,3 +1,8 @@
 .vscode
 src/aula
-
+.directory
+**/runme
+*runme
+**/*.swp
+**/*.txt
+**/Makefile
