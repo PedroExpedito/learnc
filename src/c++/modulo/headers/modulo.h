@@ -1,4 +1,4 @@
-#ifdef _MODULO_H_
+#ifndef _MODULO_H_
 #define _MODULO_H_
 
 int fatorial(int n);

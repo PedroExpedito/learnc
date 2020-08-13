@@ -1,0 +1,127 @@
+/* Fazer um programa em "C" que lê uma lista de 20 produtos e e precós e
+armazêna-os em um array do tipo da estrutura abaixo. O programa deve, em
+seguida, ordenar o vetor em ordem alfabética de nome de produto e inflacionar
+os produtos cujo valor for menor que 100 em 5%. Por fim a lista de
+produtos/preços deve ser impressa.
+OBS: usar uma rotina que recebe uma estrutura do tipo PROD com parâmetro
+e atualiza o preço, uma que lê os dados para a estrutura do tipo PROD e outra
+capaz de imprimir a estrutura.
+typedef struct
+{
+char nome[80];
+float preco;
+} PROD;
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define TAM 20
+typedef struct {
+  char nome[80];
+  float preco;
+} PROD;
+
+void wMAX();
+void rwMAX();
+void menu();
+void readDataPROD();
+void writeDataPROD();
+void createPROD();
+void printPROD();
+void sortPROD();
+
+PROD prod[TAM];
+
+int MAX = 0;
+void rMAX(){
+  FILE *file;
+  file = fopen("max.txt", "r");
+  if (file != NULL){
+    fscanf(file,"%d",&MAX);
+  }
+  else{wMAX();}
+}
+void wMAX() {
+  FILE *file;
+  file = fopen("max.txt", "w");
+  fprintf(file, "%d", MAX);
+  fclose(file);
+}
+void readDataPROD() {
+  FILE *file;
+  file = fopen("prod.txt", "r");
+  if (file != NULL) {
+    printf("CHEGOU");
+    for (int i = 0; i < MAX; i++) {
+      fscanf(file, "%s\n%f\n", prod[i].nome, &prod[i].preco);
+    }
+  }
+    fclose(file);
+}
+void writeDataPROD() {
+  FILE *file;
+  file = fopen("prod.txt", "w");
+  if (file == NULL) {
+    printf("ERRO FILE DONT EXIST");
+  } else {
+    for (int i = 0; i < MAX; i++) {
+      fprintf(file, "%s\n%f\n", prod[i].nome, prod[i].preco);
+    }
+    fclose(file);
+  }
+  wMAX();
+}
+void createPROD() {
+  printf("Nome do Produto\n");
+  scanf("%s", &*prod[MAX].nome);
+  printf("Preço do Produto\n");
+  scanf("%f", &prod[MAX].preco);
+  MAX++;
+  writeDataPROD();
+}
+void sortPROD() {
+  char aux[80];
+  int j = 0;
+  for (int i = 0; i < MAX - 1; i++) {
+    if (strcmp(prod[i].nome, prod[i + 1].nome) > 0) {
+      j++;
+      strcpy(aux, prod[i].nome);
+      printf("\n\nValor de AUX:: %s ::\n", aux);
+      strcpy(prod[i].nome, prod[i + 1].nome);
+      strcpy(prod[i + 1].nome, aux);
+    }
+  }
+  writeDataPROD();
+}
+void printPROD() {
+  printf("\n IMPRIMINDO LISTA: \n\n");
+  for (int i = 0; i < MAX; i++) {
+    printf("%s\n%f\n", prod[i].nome, prod[i].preco);
+  }
+  printf("\nLista imprimida\n");
+}
+void menu() {
+  printf("1 para inserir um produto\n2 Para imprimir a lista de produtos\n3 "
+         "SAIR\n4 para ordenar a lista\n");
+  int num;
+  scanf("%d", &num);
+  switch (num) {
+  case 1:
+    createPROD();
+    menu();
+  case 2:
+    printPROD();
+    menu();
+  case 3:
+    exit(1);
+    menu();
+  case 4:
+    sortPROD();
+    menu();
+  }
+}
+int main(void) {
+  readDataPROD();
+  rMAX();
+  menu();
+}
