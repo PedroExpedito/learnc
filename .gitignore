@@ -1,8 +1,11 @@
 .vscode
 src/aula
 .directory
+**/*.elf
 **/runme
 *runme
 **/*.swp
 **/*.txt
 **/Makefile
+.ccls-cache/
+**/*.swo

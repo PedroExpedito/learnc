@@ -1,5 +1,0 @@
-cookiecutter
-cmake -B build
-
-
-
