@@ -3,10 +3,8 @@
 
 int main(void) {
   int vector[5] = { 5, 2, 4, 1, 5 };
-  sort(5, vector);
+  mergeSort(vector, 0, 5);
   printv(5, vector);
-
-
   return 0;
 }
 

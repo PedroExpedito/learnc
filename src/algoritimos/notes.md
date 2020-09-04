@@ -12,6 +12,10 @@
 
 * HEAP 0
 
+* Ordenação por intercalação 0
+
+* Ordenação por inserção 10
+
 ## DICAS.
 
 Partes I e VIII ensinam toda a parte matemática necessária.

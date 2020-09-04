@@ -29,6 +29,19 @@ int sort(int size, int *vector) {
 }
 ```
 
+## É usado em todas as áreas do conhecimento humano.
+
+* Biologia - Genoma Humano.
+
+* Internet
+
+* Comercio Eletrônico
+
+* Industria
+
+##
+
+
 
 
 
