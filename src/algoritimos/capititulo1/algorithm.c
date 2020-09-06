@@ -38,7 +38,7 @@ void merge(int vetor[], int comeco, int meio, int fim) {
     free(vetAux);
 }
 
-void mergeSort(int vetor[], int comeco, int fim){
+void mergeSort(int *vetor, int comeco, int fim){
     if (comeco < fim) {
         int meio = (fim+comeco)/2;
 
@@ -52,7 +52,7 @@ int insertionSort(int size, int *vector){
   int aux;
   for ( int i = 1; i < size; i++ ) {
     int j = i - 1;
-    int aux = vector[i];
+    aux = vector[i];
     while(j >= 0 && aux < vector[j]) {
       vector[j+1] = vector[j];
       j--;
@@ -78,7 +78,7 @@ int quad(int n) {
   return n*n;
 }
 /* ordenar vetor em ordem crescente*/
-int sort(int size, int *vector) {
+int bubbleSort(int size, int *vector) {
   int aux;
   for (int j = 0; j < size; j++) {
     for (int i = 0; i < size; i++) {
