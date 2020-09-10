@@ -10,7 +10,7 @@ void ERROR(char *msg, int code) {
 
 /* Passos:
  * Ler o arquivo e colocar os dados em uma estrutura
- * Ordenar os dados pelo numero
+ * Ordenar os dados pelo numero - Não foi preciso porque os dados.txt já estão ordenados
  * implementar busca binaria
  *
  * referencias:
