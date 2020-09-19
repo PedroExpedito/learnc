@@ -25,14 +25,28 @@ class Account {
   protected:
 };
 
+void foo(Account* c) {
+  c->deposit(20);
+  (*c).deposit(22);
+  std::cout << c << std::endl;
+}
+void foo(Account& c) {
+  c.deposit(11);
+}
+
+Account* newAccount(int num) {
+  Account * c = new Account;
+  c->id = num;
+  c->balance = 100;
+  return c;
+}
+
 int main(void) {
   Account c = {1, 100.54};
   c.id = 1;
   c.deposit(100);
-  c.whitdraw(10);
+  foo(c);
 
-  std::cout << c.getBalance() << std::endl;
-  c.whitdraw(-20);
   std::cout << "balance: " << c.getBalance() << std::endl;
 
   return 0;
