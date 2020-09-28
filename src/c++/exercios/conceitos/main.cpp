@@ -10,6 +10,7 @@
 // O contrutor é o nome da classe podendo haver varios fazendo uma sobrecarga de
 // contrutor e o destrutor é a negação do contrutor com o simbolo ~
 //
+//
 using namespace std;
 
 int main(void) {

@@ -8,7 +8,7 @@
 
 * Calculo diferencial elementar 0
 
-* Grafos 1
+* Grafos 10
 
 * HEAP 0
 
@@ -19,12 +19,4 @@
 ## DICAS.
 
 Partes I e VIII ensinam toda a parte matemática necessária.
-
-
-
-
-
-
-
-
 
