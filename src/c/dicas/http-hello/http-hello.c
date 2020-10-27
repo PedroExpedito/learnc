@@ -1,3 +1,5 @@
+// testado em GNU/Debian Buster
+
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
