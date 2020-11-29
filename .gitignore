@@ -1,9 +1,12 @@
+**/*.py
+**/*.exe
 **/*.webm
 **/*.mp4
 .vscode
 src/aula
 .directory
-**/*.elf
+**/*.elf*
+**/*.o
 **/runme
 *runme
 **/*.swp
@@ -11,3 +14,4 @@ src/aula
 **/Makefile
 .ccls-cache/
 **/*.swo
+**/*.gdb*
