@@ -25,6 +25,10 @@ São como memoria interna do CPU
 
 # Existem outros registradores como o de debugger
 
+Umas das flags mais utilizadas em engenharia reversa é o Z é o
+bit 6 define se o resultado de uma operação deu zero
+
+
 
 
 
