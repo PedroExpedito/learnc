@@ -1,22 +1,28 @@
 #include<json-c/json.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <err.h>
 
 #define ERROR(i, msg) printf("%s\n", msg); exit(i)
 
 int main(int argc, char **argv) {
+
+  if(argc < 2) {
+    ERROR(EXIT_FAILURE, "Passe o arquivo como argumento");
+  }
+
   FILE *data;
+
+  data = fopen(argv[1], "r");
+
+  if (data == NULL) {
+    ERROR(1, "File Not Found");
+  }
 
   struct json_object *parsed_json;
 
   struct json_object *name;
   struct json_object *surname;
-
-  data = fopen("SimpleData.json", "r");
-
-  if (data == NULL) {
-    ERROR(1, "File Not Found");
-  }
 
   //  tamanho do buffer
   fseek(data, 0, SEEK_END);
