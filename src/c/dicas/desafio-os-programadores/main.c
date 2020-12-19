@@ -1,9 +1,11 @@
 #include<json-c/json.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#define ERROR(i, msg) printf("%s\n", msg); exit(i)
 
 int main(int argc, char **argv) {
   FILE *data;
-  char buffer[1024];
 
   struct json_object *parsed_json;
 
@@ -11,7 +13,24 @@ int main(int argc, char **argv) {
   struct json_object *surname;
 
   data = fopen("SimpleData.json", "r");
-  fread(buffer, 1024, 1, data);
+
+  if (data == NULL) {
+    ERROR(1, "File Not Found");
+  }
+
+  //  tamanho do buffer
+  fseek(data, 0, SEEK_END);
+
+  //Não precisa de sizeof(char) em todas as arquituturas é um bit
+  unsigned long long int bufferSize = ftell(data);
+  char *buffer = malloc(bufferSize);
+
+  // voltar ao inicio
+  fseek(data, 0, SEEK_SET);
+
+  // passar para o buffer
+  fread(buffer, bufferSize, 1, data);
+  // fechando arquivo
   fclose(data);
 
   parsed_json = json_tokener_parse(buffer);
