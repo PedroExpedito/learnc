@@ -9,6 +9,7 @@
 
 #include "headers/list-names.h"
 
+
 typedef unsigned long long int ulli;
 
 struct Funcionario {
@@ -174,11 +175,8 @@ int main(int argc, char **argv) {
     for (ulli j = 1; j < arrayLenth; j++) {
       if(strcmp(Funcionarios[j].area , list_area[i].codigo) == 0) {
         salarioCorrente = Funcionarios[j].salario;
-        if(maiorSalarioArea < 0) {
+        if(maiorSalarioArea < salarioCorrente) {
           maiorSalarioArea = salarioCorrente;
-          idDoMaiorSalario = j;
-        }
-        else if(maiorSalarioArea < salarioCorrente) {
           idDoMaiorSalario = j;
         }
       }
@@ -187,10 +185,21 @@ int main(int argc, char **argv) {
     maiorSalarioArea = -1;
   }
 
-  printf("%s\n", Funcionarios[idDoMaiorDeCadaArea[0]].nome);
-  printf("%s\n", Funcionarios[idDoMaiorDeCadaArea[1]].nome);
-  printf("%s\n", Funcionarios[idDoMaiorDeCadaArea[2]].nome);
+  for(ulli i = 0; i < areasTamanho; i++) {
+    printf("%f\n",Funcionarios[idDoMaiorDeCadaArea[i]].salario);
+  }
 
+  ulli tmp;
+  for(ulli i = 0; i < areasTamanho-1; i++) {
+    if(Funcionarios[idDoMaiorDeCadaArea[i]].salario < Funcionarios[idDoMaiorDeCadaArea[i+1]].salario) {
+      tmp = idDoMaiorDeCadaArea[i];
+      idDoMaiorDeCadaArea[i] = idDoMaiorDeCadaArea[i+1];
+      idDoMaiorDeCadaArea[i+1] = tmp;
+    }
+  }
+  for(ulli i = 0; i < areasTamanho; i++) {
+    printf("%f\n",Funcionarios[idDoMaiorDeCadaArea[i]].salario);
+  }
 
   return 0;
 }
