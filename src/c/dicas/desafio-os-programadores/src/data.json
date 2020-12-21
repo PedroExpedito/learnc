@@ -28,13 +28,6 @@
             "salario":3700.00,
             "area":"SM"
         },
-         {
-            "id":3,
-            "nome":"Bernarda",
-            "sobrenome":"Libia",
-            "salario":3700.00,
-            "area":"SM"
-        },
         {
             "id":4,
             "nome":"Cleverton",

@@ -2,6 +2,8 @@
 #include <json-c/json.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <float.h>
+#include <string.h>
 
 #define ERROR(i, msg)                                                          \
   fprintf(stderr, "%s\n", msg);                                                \
@@ -10,196 +12,171 @@
 #include "headers/list-names.h"
 
 
-typedef unsigned long long int ulli;
+
+// Global Vars
+unsigned int funcionarios_length;
 
 struct Funcionario {
-  ulli id;
+  unsigned int id;
   char nome[50];
   char sobrenome[50];
   double salario;
   char area[2];
 };
 
+struct Area {
+    char codigo[3];
+    char nome[100];
+};
+
 typedef struct Funcionario t_funcionario;
+typedef struct Area t_area;
+
+unsigned int get_file_size(FILE *file) {
+  fseek(file, 0, SEEK_END);
+  unsigned int ret  = ftell(file);
+  fseek(file, 0, SEEK_SET);
+  return ret;
+}
+
+void global_print(json_object *j_funcionarios) {
+  unsigned int i;
+
+  struct json_object *j_funcionario;
+  struct json_object *j_salario;
+
+  struct json_object *j_max_salary;
+  struct json_object *j_min_salary;
+
+  j_max_salary = json_object_new_array();
+  j_min_salary = json_object_new_array();
+
+  float currentSalary;
+  float MaxSalary = 0;
+  float MinSalary = FLT_MAX;
+  float SumSalary = 0;
+
+  for ( i = 0; i < funcionarios_length; i++ ) {
+    j_funcionario = json_object_array_get_idx(j_funcionarios, i);
+    json_object_object_get_ex(j_funcionario, "salario", &j_salario);
+    currentSalary = json_object_get_double(j_salario);
+
+    SumSalary += currentSalary;
+
+    if( currentSalary > MaxSalary ) {
+      j_max_salary = json_object_new_array();
+      json_object_array_add(j_max_salary, j_funcionario);
+      MaxSalary = currentSalary;
+    } else if( currentSalary == MaxSalary) {
+      json_object_array_add(j_max_salary, j_funcionario);
+    }
+    if( currentSalary < MinSalary) {
+      MinSalary = currentSalary;
+      j_min_salary = json_object_new_array();
+      json_object_array_add(j_min_salary, j_funcionario);
+    } else if( currentSalary == MinSalary) {
+      json_object_array_add(j_min_salary, j_funcionario);
+    }
+  }
+
+  // effetive print
+  struct json_object *j_name;
+  struct json_object *j_surname;
+  struct json_object *j_salary;
+
+  for ( i = 0; i < json_object_array_length(j_max_salary); i++) {
+    j_funcionario = json_object_array_get_idx(j_max_salary, i);
+    json_object_object_get_ex(j_funcionario, "nome", &j_name);
+    json_object_object_get_ex(j_funcionario, "sobrenome", &j_surname);
+    json_object_object_get_ex(j_funcionario, "salario", &j_salary);
+
+    printf("global_max|%s %s|%.2f\n", json_object_get_string(j_name),
+        json_object_get_string(j_surname), json_object_get_double(j_salary));
+  }
+
+  for ( i = 0; i < json_object_array_length(j_min_salary); i++) {
+    j_funcionario = json_object_array_get_idx(j_min_salary, i);
+    json_object_object_get_ex(j_funcionario, "nome", &j_name);
+    json_object_object_get_ex(j_funcionario, "sobrenome", &j_surname);
+    json_object_object_get_ex(j_funcionario, "salario", &j_salary);
+
+    printf("global_min|%s %s|%.2f\n", json_object_get_string(j_name),
+        json_object_get_string(j_surname), json_object_get_double(j_salary));
+  }
+  printf("global_avg|%.2f\n", SumSalary / (float) funcionarios_length);
+}
+
+void area_print(json_object *j_funcionarios, json_object *j_areas) {
+
+  struct json_object *j_SD;
+  struct json_object *j_SM;
+  struct json_object *j_UD;
+
+  struct json_object *j_funcionario;
+  struct json_object *j_code;
+
+  j_SD = json_object_new_array();
+  j_SM = json_object_new_array();
+  j_UD = json_object_new_array();
+  unsigned int i;
+
+  char code[3];
+
+  for( i = 0; i < funcionarios_length; i++) {
+    j_funcionario = json_object_array_get_idx(j_funcionarios, i);
+    json_object_object_get_ex(j_funcionario, "area", &j_code);
+
+    puts(json_object_get_string(j_code));
+
+    strcpy(code,json_object_get_string(j_code));
+
+
+    if(strcmp(code, "SD") == 0) {
+      json_object_array_add(j_SD,j_funcionario);
+    }
+
+    else if(strcmp(code, "SM") == 0) {
+      json_object_array_add(j_SM,j_funcionario);
+    }
+    else {
+      json_object_array_add(j_UD,j_funcionario);
+    }
+  }
+  printf("%lu\n",json_object_array_length(j_SD));
+  printf("%lu\n",json_object_array_length(j_SM));
+  printf("%lu\n",json_object_array_length(j_UD));
+
+}
 
 int main(int argc, char **argv) {
-
   if (argc < 2) {
     ERROR(EXIT_FAILURE, "Passe o arquivo como argumento");
   }
-
   FILE *data;
-
   data = fopen(argv[1], "r");
-
   if (data == NULL) {
     ERROR(1, "File Not Found");
   }
-
-  //  tamanho do buffer
-  fseek(data, 0, SEEK_END);
-
-  // Não precisa de sizeof(char) em todas as arquituturas é um bit
-  unsigned long long int bufferSize = ftell(data);
+  unsigned int bufferSize = get_file_size(data);
   char *buffer = malloc(bufferSize);
-
-  // voltar ao inicio
-  fseek(data, 0, SEEK_SET);
-
-  // passar para o buffer
   fread(buffer, bufferSize, 1, data);
-  // fechando arquivo
   fclose(data);
 
   struct json_object *parsed_json;
-
-  struct json_object *funcionarios;
-  struct json_object *areas;
+  struct json_object *j_funcionarios;
+  struct json_object *j_areas;
 
   parsed_json = json_tokener_parse(buffer);
 
-  json_object_object_get_ex(parsed_json, "funcionarios", &funcionarios);
-  json_object_object_get_ex(parsed_json, "areas", &areas);
+  json_object_object_get_ex(parsed_json, "funcionarios", &j_funcionarios);
+  json_object_object_get_ex(parsed_json, "areas", &j_areas);
 
-  struct json_object *funcionario;
 
+  // Definir antes de chamar quaquer thread
+  funcionarios_length = json_object_array_length(j_funcionarios);
+
+  global_print(j_funcionarios);
+  area_print(j_funcionarios, j_areas);
   // JSON to array
-
-  ulli arrayLenth = json_object_array_length(funcionarios);
-
-  t_funcionario Funcionarios[arrayLenth];
-
-  struct json_object *id;
-  struct json_object *nome;
-  struct json_object *sobrenome;
-  struct json_object *salario;
-  struct json_object *area;
-
-  for (int i = 0; i < arrayLenth; i++) {
-    funcionario = json_object_array_get_idx(funcionarios, i);
-
-    json_object_object_get_ex(funcionario, "id", &id);
-    Funcionarios[i].id = json_object_get_int64(id);
-
-    json_object_object_get_ex(funcionario, "nome", &nome);
-    strcpy(Funcionarios[i].nome, json_object_get_string(nome));
-
-    json_object_object_get_ex(funcionario, "sobrenome", &sobrenome);
-    strcpy(Funcionarios[i].sobrenome, json_object_get_string(sobrenome));
-
-    json_object_object_get_ex(funcionario, "salario", &salario);
-    Funcionarios[i].salario = json_object_get_double(salario);
-
-    json_object_object_get_ex(funcionario, "area", &area);
-    strcpy(Funcionarios[i].area, json_object_get_string(area));
-  }
-
-  // maior salario
-
-  double salarioCorrente = Funcionarios[0].salario;
-  double SomaSalarios = salarioCorrente;
-  ulli idMaiorSalario = 0;
-
-  for (ulli i = 1; i < arrayLenth; i++) {
-    SomaSalarios += Funcionarios[i].salario;
-    if (salarioCorrente < Funcionarios[i].salario) {
-      salarioCorrente = Funcionarios[i].salario;
-      idMaiorSalario = i;
-    }
-  }
-
-  for (ulli i = 1; i < arrayLenth; i++) {
-    if (Funcionarios[i].salario == Funcionarios[idMaiorSalario].salario) {
-      printf("global_max|%s %s|%.2f\n", Funcionarios[i].nome,
-             Funcionarios[i].sobrenome, Funcionarios[i].salario);
-    }
-  }
-
-  // menor salario
-
-  ulli idMenorSalario = 0;
-
-  for (ulli i = 1; i < arrayLenth; i++) {
-    if (salarioCorrente > Funcionarios[i].salario) {
-      salarioCorrente = Funcionarios[i].salario;
-      idMenorSalario = i;
-    }
-  }
-
-  for (ulli i = 1; i < arrayLenth; i++) {
-    if (Funcionarios[i].salario == Funcionarios[idMenorSalario].salario) {
-
-      printf("global_min|%s %s|%.2f\n", Funcionarios[i].nome,
-             Funcionarios[i].sobrenome, Funcionarios[i].salario);
-    }
-  }
-
-  // global avg
-  printf("global_avg|%.2f\n",(SomaSalarios / ((double) arrayLenth)));
-
-  // area max
-
-  ulli areasTamanho = json_object_array_length(areas);
-  // Area para struct
-
-  struct S_area {
-    char codigo[3];
-    char nome[100];
-  };
-
-  typedef struct S_area s_area;
-
-  s_area list_area[areasTamanho];
-
-  struct json_object *area2;
-  struct json_object *area2_codigo;
-  struct json_object *area2_nome;
-
-  for ( unsigned int i = 0; i < areasTamanho; i++) {
-    area2 = json_object_array_get_idx(areas, i);
-    json_object_object_get_ex(area2, "nome", &area2_nome);
-    json_object_object_get_ex(area2, "codigo", &area2_codigo);
-
-    strcpy(list_area[i].codigo, json_object_get_string(area2_codigo));
-    strcpy(list_area[i].nome, json_object_get_string(area2_nome));
-
-    /* printf("Nome: %s, código: %s\n", list_area[i].nome, list_area[i].codigo); */
-  }
-  // area max
-
-  ulli idDoMaiorDeCadaArea[areasTamanho];
-  double maiorSalarioArea = -1;
-  ulli idDoMaiorSalario;
-
-  for ( unsigned int i = 0; i < areasTamanho; i++) {
-    for (ulli j = 1; j < arrayLenth; j++) {
-      if(strcmp(Funcionarios[j].area , list_area[i].codigo) == 0) {
-        salarioCorrente = Funcionarios[j].salario;
-        if(maiorSalarioArea < salarioCorrente) {
-          maiorSalarioArea = salarioCorrente;
-          idDoMaiorSalario = j;
-        }
-      }
-    }
-    idDoMaiorDeCadaArea[i] = idDoMaiorSalario;
-    maiorSalarioArea = -1;
-  }
-
-  for(ulli i = 0; i < areasTamanho; i++) {
-    printf("%f\n",Funcionarios[idDoMaiorDeCadaArea[i]].salario);
-  }
-
-  ulli tmp;
-  for(ulli i = 0; i < areasTamanho-1; i++) {
-    if(Funcionarios[idDoMaiorDeCadaArea[i]].salario < Funcionarios[idDoMaiorDeCadaArea[i+1]].salario) {
-      tmp = idDoMaiorDeCadaArea[i];
-      idDoMaiorDeCadaArea[i] = idDoMaiorDeCadaArea[i+1];
-      idDoMaiorDeCadaArea[i+1] = tmp;
-    }
-  }
-  for(ulli i = 0; i < areasTamanho; i++) {
-    printf("%f\n",Funcionarios[idDoMaiorDeCadaArea[i]].salario);
-  }
-
-  return 0;
 }
+
