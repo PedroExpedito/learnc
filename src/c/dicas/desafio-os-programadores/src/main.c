@@ -9,7 +9,7 @@
   fprintf(stderr, "%s\n", msg);                                                \
   exit(i)
 
-#include "headers/list-names.h"
+#include "headers/foo.h"
 
 
 
@@ -39,72 +39,6 @@ unsigned int get_file_size(FILE *file) {
   return ret;
 }
 
-void global_print(json_object *j_funcionarios) {
-  unsigned int i;
-
-  struct json_object *j_funcionario;
-  struct json_object *j_salario;
-
-  struct json_object *j_max_salary;
-  struct json_object *j_min_salary;
-
-  j_max_salary = json_object_new_array();
-  j_min_salary = json_object_new_array();
-
-  float currentSalary;
-  float MaxSalary = 0;
-  float MinSalary = FLT_MAX;
-  float SumSalary = 0;
-
-  for ( i = 0; i < funcionarios_length; i++ ) {
-    j_funcionario = json_object_array_get_idx(j_funcionarios, i);
-    json_object_object_get_ex(j_funcionario, "salario", &j_salario);
-    currentSalary = json_object_get_double(j_salario);
-
-    SumSalary += currentSalary;
-
-    if( currentSalary > MaxSalary ) {
-      j_max_salary = json_object_new_array();
-      json_object_array_add(j_max_salary, j_funcionario);
-      MaxSalary = currentSalary;
-    } else if( currentSalary == MaxSalary) {
-      json_object_array_add(j_max_salary, j_funcionario);
-    }
-    if( currentSalary < MinSalary) {
-      MinSalary = currentSalary;
-      j_min_salary = json_object_new_array();
-      json_object_array_add(j_min_salary, j_funcionario);
-    } else if( currentSalary == MinSalary) {
-      json_object_array_add(j_min_salary, j_funcionario);
-    }
-  }
-
-  // effetive print
-  struct json_object *j_name;
-  struct json_object *j_surname;
-  struct json_object *j_salary;
-
-  for ( i = 0; i < json_object_array_length(j_max_salary); i++) {
-    j_funcionario = json_object_array_get_idx(j_max_salary, i);
-    json_object_object_get_ex(j_funcionario, "nome", &j_name);
-    json_object_object_get_ex(j_funcionario, "sobrenome", &j_surname);
-    json_object_object_get_ex(j_funcionario, "salario", &j_salary);
-
-    printf("global_max|%s %s|%.2f\n", json_object_get_string(j_name),
-        json_object_get_string(j_surname), json_object_get_double(j_salary));
-  }
-
-  for ( i = 0; i < json_object_array_length(j_min_salary); i++) {
-    j_funcionario = json_object_array_get_idx(j_min_salary, i);
-    json_object_object_get_ex(j_funcionario, "nome", &j_name);
-    json_object_object_get_ex(j_funcionario, "sobrenome", &j_surname);
-    json_object_object_get_ex(j_funcionario, "salario", &j_salary);
-
-    printf("global_min|%s %s|%.2f\n", json_object_get_string(j_name),
-        json_object_get_string(j_surname), json_object_get_double(j_salary));
-  }
-  printf("global_avg|%.2f\n", SumSalary / (float) funcionarios_length);
-}
 
 void area_print(json_object *j_funcionarios, json_object *j_areas) {
 
@@ -126,8 +60,6 @@ void area_print(json_object *j_funcionarios, json_object *j_areas) {
     j_funcionario = json_object_array_get_idx(j_funcionarios, i);
     json_object_object_get_ex(j_funcionario, "area", &j_code);
 
-    puts(json_object_get_string(j_code));
-
     strcpy(code,json_object_get_string(j_code));
 
 
@@ -142,6 +74,17 @@ void area_print(json_object *j_funcionarios, json_object *j_areas) {
       json_object_array_add(j_UD,j_funcionario);
     }
   }
+
+  // effetive print MAX
+  print(j_SM,"area", "Gerenciamento de Software|");
+  print(j_UD,"area", "Designer de UI/UX|");
+  print(j_SD,"area", "Desenvolvimento de Software|");
+
+  unsigned int SD_length = json_object_array_length(j_SD);
+  unsigned int SM_length = json_object_array_length(j_SM);
+  unsigned int UD_length = json_object_array_length(j_UD);
+
+
   printf("%lu\n",json_object_array_length(j_SD));
   printf("%lu\n",json_object_array_length(j_SM));
   printf("%lu\n",json_object_array_length(j_UD));
@@ -172,11 +115,9 @@ int main(int argc, char **argv) {
   json_object_object_get_ex(parsed_json, "areas", &j_areas);
 
 
-  // Definir antes de chamar quaquer thread
   funcionarios_length = json_object_array_length(j_funcionarios);
 
-  global_print(j_funcionarios);
+  print(j_funcionarios,"global","");
   area_print(j_funcionarios, j_areas);
-  // JSON to array
 }
 
