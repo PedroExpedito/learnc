@@ -12,26 +12,6 @@
 #include "headers/foo.h"
 
 
-
-// Global Vars
-unsigned int funcionarios_length;
-
-struct Funcionario {
-  unsigned int id;
-  char nome[50];
-  char sobrenome[50];
-  double salario;
-  char area[2];
-};
-
-struct Area {
-    char codigo[3];
-    char nome[100];
-};
-
-typedef struct Funcionario t_funcionario;
-typedef struct Area t_area;
-
 unsigned int get_file_size(FILE *file) {
   fseek(file, 0, SEEK_END);
   unsigned int ret  = ftell(file);
@@ -40,54 +20,51 @@ unsigned int get_file_size(FILE *file) {
 }
 
 
-void area_print(json_object *j_funcionarios, json_object *j_areas) {
+void last_name_max(struct json_object *j_funcionarios) {
 
-  struct json_object *j_SD;
-  struct json_object *j_SM;
-  struct json_object *j_UD;
+  unsigned int funcionarios_length;
+  funcionarios_length = json_object_array_length(j_funcionarios);
+
+  struct json_object *j_all_surnames = json_object_new_array();
+  struct json_object *j_surname;
+  struct json_object *j_current_surname;
 
   struct json_object *j_funcionario;
-  struct json_object *j_code;
+  struct json_object *j_current_funcionario;
 
-  j_SD = json_object_new_array();
-  j_SM = json_object_new_array();
-  j_UD = json_object_new_array();
   unsigned int i;
+  unsigned int j;
 
-  char code[3];
+  Str_list *list = str_list_create();
 
   for( i = 0; i < funcionarios_length; i++) {
-    j_funcionario = json_object_array_get_idx(j_funcionarios, i);
-    json_object_object_get_ex(j_funcionario, "area", &j_code);
+    j_funcionario = json_object_array_get_idx(j_funcionarios,i);
+    json_object_object_get_ex(j_funcionario,"sobrenome",&j_surname);
+    for( j = i+1; j < funcionarios_length; j++) {
+      j_current_funcionario = json_object_array_get_idx(j_funcionarios,j);
 
-    strcpy(code,json_object_get_string(j_code));
+      json_object_object_get_ex(j_current_funcionario,"sobrenome",&j_current_surname);
 
+      if(strcmp(json_object_get_string(j_surname),json_object_get_string(
+              j_current_surname)) == 0 &&
+          str_list_search(list,
+            json_object_get_string(j_current_surname)) == 0) {
 
-    if(strcmp(code, "SD") == 0) {
-      json_object_array_add(j_SD,j_funcionario);
+        str_list_push(list,
+            json_object_get_string(j_current_surname));
+        json_object_array_add(j_all_surnames, j_funcionario);
+      }
     }
-
-    else if(strcmp(code, "SM") == 0) {
-      json_object_array_add(j_SM,j_funcionario);
-    }
-    else {
-      json_object_array_add(j_UD,j_funcionario);
-    }
+    print_last_name(j_all_surnames);
+    j_all_surnames = json_object_new_array();
   }
-
-  // effetive print MAX
-  print(j_SM,"area", "Gerenciamento de Software|");
-  print(j_UD,"area", "Designer de UI/UX|");
-  print(j_SD,"area", "Desenvolvimento de Software|");
-
-  unsigned int SD_length = json_object_array_length(j_SD);
-  unsigned int SM_length = json_object_array_length(j_SM);
-  unsigned int UD_length = json_object_array_length(j_UD);
-
-
-  printf("%lu\n",json_object_array_length(j_SD));
-  printf("%lu\n",json_object_array_length(j_SM));
-  printf("%lu\n",json_object_array_length(j_UD));
+  str_list_free(list);
+  // Preciso fazer uma forma de separar os  funcionarios por
+  // sobrenome porém eu não sei quantos sobrenomes tem.
+  // O problema é que eu preciso criar um array e verificar se
+  // dentro deste array tenho que verificar se já existe o array
+  // do sobrenome para adicionar os novos ou é inedito
+  // Só falta verificar se o username já foi processado
 
 }
 
@@ -115,9 +92,8 @@ int main(int argc, char **argv) {
   json_object_object_get_ex(parsed_json, "areas", &j_areas);
 
 
-  funcionarios_length = json_object_array_length(j_funcionarios);
-
   print(j_funcionarios,"global","");
   area_print(j_funcionarios, j_areas);
+  last_name_max(j_funcionarios);
 }
 
