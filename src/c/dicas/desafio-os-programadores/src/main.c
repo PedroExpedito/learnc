@@ -94,6 +94,7 @@ int main(int argc, char **argv) {
 
   print(j_funcionarios,"global","");
   area_print(j_funcionarios, j_areas);
+  employeers(j_funcionarios, j_areas);
   last_name_max(j_funcionarios);
 }
 
