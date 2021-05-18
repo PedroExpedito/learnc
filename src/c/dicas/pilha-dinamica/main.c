@@ -1,31 +1,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ERROR(msg) printf(msg); exit(1);
+/* dynamic stack */
 
-typedef struct {
-  int value;
-} Data;
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct {
-  Data data;
-  Data *next;
-} Elemento;
+struct node {
+  char data;
+  struct node *next;
+};
 
-Elemento TOPO;
+struct node *top = NULL;
 
-void stackPush(int value) {
-
+void push(char item) {
+  struct node *nptr = malloc(sizeof(struct node));
+  nptr->data = item;
+  nptr->next = top;
+  top = nptr;
 }
-Elemento stackCreate() {
-  if(TOPO.next == NULL) {
-    ERROR("Pilha já existe");
+
+void pop() {
+  if (top == NULL) {
+    printf("\n\nStack is empty ");
   } else {
+
+    struct node *temp;
+
+    while (top != NULL) {
+      temp = top;
+      top = top->next;
+      printf("%c", temp->data);
+      free(temp);
+    }
   }
 }
-int main(void) {
 
-  stackCreate();
-
+int main() {
+  /* push('o'); */
+  /* push('r'); */
+  /* push('d'); */
+  /* push('e'); */
+  /* push('p'); */
+  push('\0');
+  pop();
   return 0;
-};
+}
