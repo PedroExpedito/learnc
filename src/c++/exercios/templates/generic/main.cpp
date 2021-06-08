@@ -3,14 +3,16 @@
 //criando funções genericas
 //
 //exemplo uma função de soma que soma varios tipo de dados como int, float, double
-#include <iostream>
+#include <stdio.h>
 
-using namespace std;
+// char
+// por que
 
-template<typename T> T sum(T n1, T n2) {
-  return n1 + n2;
+int soma(char n1, char n2) {
+ return  n1 + n2;
 }
+
 int main(void) {
-  cout << sum(1,2) <<endl;
-  cout << sum(1.43,1.0) <<endl;
+  printf("como numero: %d",soma('p', 'o'));
+  return 0;
 };
