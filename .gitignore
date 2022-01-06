@@ -17,3 +17,4 @@ src/aula
 .ccls-cache/
 **/*.swo
 **/*.gdb*
+**/build
